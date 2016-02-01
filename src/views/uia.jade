@@ -1,0 +1,11 @@
+html
+	head
+	body
+		h2 hi!
+
+		each user in users
+			li(id=user.firstname)= user.firstname
+
+		a(href='/newUser') register
+		br
+		a(href='/form') Username Search engine

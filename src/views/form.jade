@@ -1,0 +1,20 @@
+html
+	head
+	body
+		h1 Username Search engine
+		form(action= '/form' method='post' )
+			label first name
+			input(name='firstname')
+			input(type="submit", value="find user")
+		form(action= '/form' method='post' )
+			label last name
+			input(name='lastname')
+			input(type="submit", value="find user")
+		form(action= '/form' method='post' )
+			label email
+			input(name='email')
+			input(type="submit", value="find user")
+			
+		a(href='/') home
+		br
+		a(href='/newUser') register

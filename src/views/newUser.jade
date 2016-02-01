@@ -1,0 +1,16 @@
+html
+	head
+	body
+		h1 Register
+		form(action= '/newUser' method='post' )
+			label first name
+			input(name='firstname')
+			label last name
+			input(name='lastname')
+			label email
+			input(name='email')
+			input(type='submit' value='create user')
+		a(href='/') home
+		br
+		a(href='/form') Username Search engine
+			
