@@ -1,20 +1,54 @@
+doctype html
 html
 	head
+		script(src='http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js')
 	body
 		h1 Username Search engine
-		form(action= '/form' method='post' )
+		form.donnie(action= '/form' method='post')
 			label first name
-			input(name='firstname')
-			input(type="submit", value="find user")
+			input#firstname(name='firstname', autocomplete='off')
+			input#goButton(type="submit", value="find user")
+		p#listIt 
 		form(action= '/form' method='post' )
 			label last name
 			input(name='lastname')
 			input(type="submit", value="find user")
-		form(action= '/form' method='post' )
+		form.batras(action= '/form' method='post' )
 			label email
 			input(name='email')
 			input(type="submit", value="find user")
-			
+		
+
+
 		a(href='/') home
 		br
 		a(href='/newUser') register
+
+		script.
+			$("#firstname").keypress(function () {
+				
+				var value = $('#listIt').val();
+				console.log(value);
+				$('#listIt').empty();
+				console.log(value);
+				
+				console.log("snurff");
+
+				var fileData = {
+					first : $("#firstname").val()
+					}
+				console.log(fileData.first);
+				
+				$.post("/autoComplete", fileData,function(res, textStatus) {
+					
+					for(i = 0; i < res.object.length; i++) {
+					
+					$('#listIt').append(res.object[i] + "<br>" + "</br>");
+					
+					}
+				});
+			});
+
+			
+
+
