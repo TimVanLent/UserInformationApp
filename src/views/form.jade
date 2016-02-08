@@ -25,30 +25,80 @@ html
 		a(href='/newUser') register
 
 		script.
-			$("#firstname").keypress(function () {
+			var timer;
+			var x = -1;
+			var clas = 0;
+			var bras = 0;
+			var plompie = 0;
+			var schlompie = 0;
+			$("#firstname").keyup(function (e) {
+				var code = (e.keyCode || e.which);
+				if(code == 37 || code == 38 || code == 39 || code == 40) {
+				return;
+				}
+				console.log("snurfff")
+				clearTimeout(timer);
 				
 				var value = $('#listIt').val();
-				console.log(value);
+
 				$('#listIt').empty();
-				console.log(value);
-				
-				console.log("snurff");
 
 				var fileData = {
 					first : $("#firstname").val()
 					}
-				console.log(fileData.first);
-				
+				timer = setTimeout(function() {
 				$.post("/autoComplete", fileData,function(res, textStatus) {
-					
-					for(i = 0; i < res.object.length; i++) {
-					
-					$('#listIt').append(res.object[i] + "<br>" + "</br>");
-					
-					}
-				});
-			});
-
 			
+						for(i = 0; i < res.object.length; i++) {
+					
+						$('#listIt').append("<p id=" + i + ">" + res.object[i] + "</p>" + "<br>" + "</br>");
+						
+						}
+						
+						$('#firstname').keydown(function(e) { 
+							switch(e.which) {
+								
+								case 40: console.log('down');
+									x++;
+									plompie = "#" + (x - 1);
+							
+									schlompie = plompie.toString();
+									
+									$(schlompie).css("background-color","white")
+									
+									
+									clas = "#" + x	
+									bras = clas.toString();
+									
+									$(bras).css("background-color", "gray");
+									$('#firstname').val(res.object[x])
+									break;
+									//- $('#firstname').val(res.object[x]);	
+								case 38: 
+									x--;
+									plompie = "#" + (x + 1);
+							
+									schlompie = plompie.toString();
+									
+									$(schlompie).css("background-color","white")
+									clas = "#" + x	
+									bras = clas.toString();
+									$(bras).css("background-color", "gray");
+									$('#firstname').val(res.object[x])
+									break;
+								case 13: console.log('enter');
+									
+									$('#firstname').val(res.object[x]);
+								default: return;
+								}
 
+						});
+						
+					});
+				},300)
+			});
+				
+//- $('#firstname').pijltenaarbeneden(function () {
+		
 
+				

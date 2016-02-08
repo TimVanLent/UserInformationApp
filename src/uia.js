@@ -30,6 +30,12 @@ app.get('/', function(req, res) {
 //it makes an AJAX call that populates the search results.
 //Do this work in a git branch called "autocomplete". 
 //Then, merge this branch into master with a pull request.
+
+// Part 2: Bandwidth optimization
+// Modify your form again so that AJAX requests happen at most once every 300 milliseconds.
+// Do this work in a git branch called "bandwidth-optimization". Then, merge this branch into master with a pull request.
+
+
 app.get('/form', function(req, res) {
 	res.render('form');
 });
@@ -72,12 +78,12 @@ app.post('/autoComplete',
 
 							// console.log(firstletter);
 							// console.log(firstname)
-							if (firstletterUnsens === typing || firstletter === typing) {
+							if (firstletterUnsens === typing || firstletter === typing && typing.length !== 0) {
 
 								suggestions.push(sensitive);
 								count ++;
 								if (count === parsedData.length) {
-								
+									if(suggestions.length === parsedData.length) {suggestions = ['no match']};
 									console.log('found some matching results bruh!');
 									res.send({
 										object: suggestions
@@ -88,7 +94,7 @@ app.post('/autoComplete',
 								count++;
 
 								if (count === parsedData.length && suggestions.length > 0) {
-								
+									if(suggestions.length === parsedData.length) {suggestions = ['no match']};
 									console.log('found some matching results bruh!');
 									res.send({
 										object: suggestions
@@ -96,7 +102,7 @@ app.post('/autoComplete',
 								} else if (count === parsedData.length && suggestions.length === 0) {
 									
 									suggestions.push("no match")
-									console.log(suggestions)
+									
 									console.log('nothing found');
 									res.send({
 										object: suggestions
