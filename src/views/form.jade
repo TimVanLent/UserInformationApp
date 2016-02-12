@@ -5,19 +5,10 @@ html
 	body
 		h1 Username Search engine
 		form.donnie(action= '/form' method='post')
-			label first name
-			input#firstname(name='firstname', autocomplete='off')
+			input#firstname(placeholder='search for a name or an emailadress..' name='firstname', autocomplete='off', style="width:230px")
 			input#goButton(type="submit", value="find user")
 		p#listIt 
-		form(action= '/form' method='post' )
-			label last name
-			input(name='lastname')
-			input(type="submit", value="find user")
-		form.batras(action= '/form' method='post' )
-			label email
-			input(name='email')
-			input(type="submit", value="find user")
-		
+	
 
 
 		a(href='/') home
@@ -31,74 +22,66 @@ html
 			var bras = 0;
 			var plompie = 0;
 			var schlompie = 0;
+			
 			$("#firstname").keyup(function (e) {
 				var code = (e.keyCode || e.which);
 				if(code == 37 || code == 38 || code == 39 || code == 40) {
 				return;
 				}
-				console.log("snurfff")
+
 				clearTimeout(timer);
 				
-				var value = $('#listIt').val();
-
 				$('#listIt').empty();
 
 				var fileData = {
 					first : $("#firstname").val()
 					}
+				console.log(fileData)
+				
 				timer = setTimeout(function() {
 				$.post("/autoComplete", fileData,function(res, textStatus) {
-			
+						
 						for(i = 0; i < res.object.length; i++) {
-					
-						$('#listIt').append("<p id=" + i + ">" + res.object[i] + "</p>" + "<br>" + "</br>");
 						
+						$('#listIt').append("<p id=" + i + ">" + res.object[i] + "</p>" );
+		
 						}
-						
-						$('#firstname').keydown(function(e) { 
+					});
+				},300)
+			});
+
+			$('#firstname').keydown(function(e) { 
 							switch(e.which) {
+								
 								
 								case 40: console.log('down');
 									x++;
 									plompie = "#" + (x - 1);
-							
 									schlompie = plompie.toString();
-									
 									$(schlompie).css("background-color","white")
-									
-									
 									clas = "#" + x	
 									bras = clas.toString();
-									
+									var myvalue = $(bras).text()
 									$(bras).css("background-color", "gray");
-									$('#firstname').val(res.object[x])
+									$('#firstname').val(myvalue)
 									break;
-									//- $('#firstname').val(res.object[x]);	
 								case 38: 
 									x--;
 									plompie = "#" + (x + 1);
-							
 									schlompie = plompie.toString();
-									
 									$(schlompie).css("background-color","white")
 									clas = "#" + x	
 									bras = clas.toString();
+									var myvalue = $(bras).text()
 									$(bras).css("background-color", "gray");
-									$('#firstname').val(res.object[x])
+									$('#firstname').val(myvalue)
 									break;
-								case 13: console.log('enter');
-									
-									$('#firstname').val(res.object[x]);
 								default: return;
 								}
 
 						});
-						
-					});
-				},300)
-			});
 				
-//- $('#firstname').pijltenaarbeneden(function () {
+
 		
 
 				
